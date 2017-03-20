@@ -35,7 +35,7 @@ const App = () => (
         path="/about-2"
         children={({match}) => match && <h1>About with children</h1>} />
       <Route path="/contact" render={() => <h1>Contact</h1>} />
-      <Route path="/page/:page?-:subpage?" render={({match}) => (
+      <Route path="/page/:page?-:subpage(\d+)" render={({match}) => (
         <h1>
           PAGE: {match.params.page || 'Home'} <br/>
           SUBPAGE: {match.params.subpage}
