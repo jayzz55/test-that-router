@@ -4,7 +4,8 @@ import {
   Route,
   Switch,
   Link,
-  NavLink
+  NavLink,
+  Redirect
 } from 'react-router-dom';
 import './App.css';
 
@@ -25,7 +26,9 @@ const NavLinks = () => (
       to="/contact">Contact</NavLink>
     <NavLink to="/page">Page</NavLink>
     <NavLink to="/query?ask=hi">Query</NavLink>
+    <NavLink to="/old-menu/foods">Old Menu</NavLink>
     <NavLink to="/menu">Menu</NavLink>
+    <NavLink to="/protected">Protected</NavLink>
   </nav>
 )
 
@@ -40,6 +43,8 @@ const Menu = () => (
       render={({match}) => <h2>{match.params.section}</h2>} />
   </div>
 )
+
+const loggedin = true;
 
 const App = () => (
   <Router>
@@ -71,6 +76,14 @@ const App = () => (
             </div>
           )} />
           <Route path="/menu" component={Menu} />
+          <Route path="/old-menu/:section" render={({match}) => (
+            <Redirect to={`/menu/${match.params.section}`} />
+          )} />
+          <Route path="/protected" render={() => (
+            loggedin
+            ? <h1>Welcome to the protected page</h1>
+            : <Redirect to="/" />
+          )} />
           <Route path="/:itemid" render={({match}) => (
             <h1>Item: {match.params.itemid}</h1>
           )} />
