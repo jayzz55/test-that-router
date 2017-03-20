@@ -5,7 +5,8 @@ import {
   Switch,
   Link,
   NavLink,
-  Redirect
+  Redirect,
+  Prompt
 } from 'react-router-dom';
 import './App.css';
 
@@ -29,6 +30,7 @@ const NavLinks = () => (
     <NavLink to="/old-menu/foods">Old Menu</NavLink>
     <NavLink to="/menu">Menu</NavLink>
     <NavLink to="/protected">Protected</NavLink>
+    <NavLink to="/form">Form</NavLink>
   </nav>
 )
 
@@ -43,6 +45,23 @@ const Menu = () => (
       render={({match}) => <h2>{match.params.section}</h2>} />
   </div>
 )
+
+class Form extends React.Component {
+  state = {dirty: false}
+  setDirty = () => this.setState({dirty: true})
+  render() {
+    return (
+      <div>
+        <h1>Form</h1>
+        <input type="text" onInput={this.setDirty} />
+        <Prompt
+          when={this.state.dirty}
+          message="Data will be lost!"
+        />
+      </div>
+    )
+  }
+}
 
 const loggedin = true;
 
@@ -84,6 +103,7 @@ const App = () => (
             ? <h1>Welcome to the protected page</h1>
             : <Redirect to="/" />
           )} />
+          <Route path="/form" component={Form} />
           <Route path="/:itemid" render={({match}) => (
             <h1>Item: {match.params.itemid}</h1>
           )} />
