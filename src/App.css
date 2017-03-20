@@ -1,0 +1,3 @@
+nav a:-webkit-any-link {
+  padding: 5px;
+}
