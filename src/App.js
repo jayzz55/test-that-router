@@ -22,6 +22,7 @@ const NavLinks = () => (
       activeClassName="active"
       to="/contact">Contact</NavLink>
     <NavLink to="/page">Page</NavLink>
+    <NavLink to="/query?ask=hi">Query</NavLink>
   </nav>
 )
 
@@ -41,6 +42,14 @@ const App = () => (
           SUBPAGE: {match.params.subpage}
         </h1>
       )} />
+    <Route path="/query" render={({match, location}) => (
+      <div>
+        <p>Query</p>
+        <p>{JSON.stringify(match)}</p>
+        <p>{JSON.stringify(location)}</p>
+        <p>{new URLSearchParams(location.search).get('ask')}</p>
+      </div>
+    )} />
     </div>
   </Router>
 )
