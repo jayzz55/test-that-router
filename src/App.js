@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
   NavLink
 } from 'react-router-dom';
 import './App.css';
@@ -30,26 +31,29 @@ const App = () => (
   <Router>
     <div>
       <NavLinks />
-      <Route exact path="/" component={Home} />
-      <Route path="/about" render={() => <h1>About</h1>} />
-      <Route
-        path="/about-2"
-        children={({match}) => match && <h1>About with children</h1>} />
-      <Route path="/contact" render={() => <h1>Contact</h1>} />
-      <Route path="/page/:page?-:subpage(\d+)" render={({match}) => (
-        <h1>
-          PAGE: {match.params.page || 'Home'} <br/>
-          SUBPAGE: {match.params.subpage}
-        </h1>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" render={() => <h1>About</h1>} />
+        <Route
+          path="/about-2"
+          children={({match}) => match && <h1>About with children</h1>} />
+        <Route path="/contact" render={() => <h1>Contact</h1>} />
+        <Route path="/page/:page?-:subpage(\d+)" render={({match}) => (
+          <h1>
+            PAGE: {match.params.page || 'Home'} <br/>
+            SUBPAGE: {match.params.subpage}
+          </h1>
+        )} />
+      <Route path="/query" render={({match, location}) => (
+        <div>
+          <p>Query</p>
+          <p>{JSON.stringify(match)}</p>
+          <p>{JSON.stringify(location)}</p>
+          <p>{new URLSearchParams(location.search).get('ask')}</p>
+        </div>
       )} />
-    <Route path="/query" render={({match, location}) => (
-      <div>
-        <p>Query</p>
-        <p>{JSON.stringify(match)}</p>
-        <p>{JSON.stringify(location)}</p>
-        <p>{new URLSearchParams(location.search).get('ask')}</p>
-      </div>
-    )} />
+    <Route render={() => <h1>Page not found</h1>} />
+  </Switch>
     </div>
   </Router>
 )
