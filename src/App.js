@@ -21,6 +21,7 @@ const NavLinks = () => (
       isActive={isActiveFunc}
       activeClassName="active"
       to="/contact">Contact</NavLink>
+    <NavLink to="/page">Page</NavLink>
   </nav>
 )
 
@@ -34,6 +35,12 @@ const App = () => (
         path="/about-2"
         children={({match}) => match && <h1>About with children</h1>} />
       <Route path="/contact" render={() => <h1>Contact</h1>} />
+      <Route path="/page/:page?-:subpage?" render={({match}) => (
+        <h1>
+          PAGE: {match.params.page || 'Home'} <br/>
+          SUBPAGE: {match.params.subpage}
+        </h1>
+      )} />
     </div>
   </Router>
 )
