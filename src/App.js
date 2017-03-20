@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Link,
   NavLink
 } from 'react-router-dom';
 import './App.css';
@@ -24,7 +25,20 @@ const NavLinks = () => (
       to="/contact">Contact</NavLink>
     <NavLink to="/page">Page</NavLink>
     <NavLink to="/query?ask=hi">Query</NavLink>
+    <NavLink to="/menu">Menu</NavLink>
   </nav>
+)
+
+const Menu = () => (
+  <div>
+    <h1>Menu</h1>
+    <Link to="/menu/foods">Foods</Link>
+    <Link to="/menu/drinks">Drinks</Link>
+    <Link to="/menu/sides">Sides</Link>
+    <Route
+      path="/menu/:section"
+      render={({match}) => <h2>{match.params.section}</h2>} />
+  </div>
 )
 
 const App = () => (
@@ -56,6 +70,7 @@ const App = () => (
               <p>{new URLSearchParams(location.search).get('ask')}</p>
             </div>
           )} />
+          <Route path="/menu" component={Menu} />
           <Route path="/:itemid" render={({match}) => (
             <h1>Item: {match.params.itemid}</h1>
           )} />
